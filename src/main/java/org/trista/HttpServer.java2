@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+// the very first version of httpserver
 public class HttpServer {
 
   /** WEB_ROOT is the directory where our HTML and other files reside.
@@ -57,7 +58,16 @@ public class HttpServer {
         // create Response object
         Response response = new Response(output);
         response.setRequest(request);
-        response.sendStaticResource();
+
+        // check if this is a request for a servlet or a static resource
+        // a request for a servlet begins with "/servlet/"
+        if(request.getUri().startsWith("/servlet/")) {
+          ServletProcessor processor1 = new ServletProcessor();
+          processor1.process(request, response);
+        } else {
+          StaticResourceProcessor processor = new StaticResourceProcessor();
+          processor.process(request, response);
+        }
 
         // Close the socket
         socket.close();
