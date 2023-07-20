@@ -1,4 +1,4 @@
-package org.trista;
+package org.trista.lifecycle;
 
 import java.util.EventObject;
 
