@@ -62,7 +62,7 @@
  */
 
 
-package org.trista;
+package org.trista.lifecycle;
 
 
 import org.trista.exception.LifecycleException;

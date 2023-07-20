@@ -1,9 +1,9 @@
 package org.trista.connector.http;
 
 import org.trista.Globals;
-import org.trista.Lifecycle;
-import org.trista.LifecycleListener;
-import org.trista.LifecycleSupport;
+import org.trista.lifecycle.Lifecycle;
+import org.trista.lifecycle.LifecycleListener;
+import org.trista.lifecycle.LifecycleSupport;
 import org.trista.ServletProcessor;
 
 import java.io.BufferedInputStream;
@@ -24,7 +24,7 @@ import org.trista.util.RequestUtil;
 import org.trista.util.StringManager;
 import org.trista.util.StringParser;
 
-import static org.trista.Lifecycle.STOP_EVENT;
+import static org.trista.lifecycle.Lifecycle.STOP_EVENT;
 
 /* this class used to be called HttpServer */
 public class HttpProcessor implements Runnable, Lifecycle {

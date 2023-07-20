@@ -23,6 +23,8 @@ final class HttpResponseImpl
     protected static final String info =
             "org.apache.catalina.connector.http10.HttpResponseImpl/1.0";
 
+    protected Boolean allowChunking = false;
+
 
     // ------------------------------------------------------------- Properties
 
@@ -62,6 +64,13 @@ final class HttpResponseImpl
 
         super.recycle();
 
+    }
+
+    /**
+     * Set the chunking flag.
+     */
+    void setAllowChunking(boolean allowChunking) {
+        this.allowChunking = allowChunking;
     }
 
 

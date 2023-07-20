@@ -1,4 +1,4 @@
-package org.trista;
+package org.trista.lifecycle;
 
 public final class LifecycleSupport {
 

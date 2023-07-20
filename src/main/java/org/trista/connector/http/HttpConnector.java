@@ -1,9 +1,9 @@
 package org.trista.connector.http;
 
 import org.trista.Connector;
-import org.trista.Lifecycle;
-import org.trista.LifecycleListener;
-import org.trista.LifecycleSupport;
+import org.trista.lifecycle.Lifecycle;
+import org.trista.lifecycle.LifecycleListener;
+import org.trista.lifecycle.LifecycleSupport;
 import org.trista.connector.net.DefaultServerSocketFactory;
 import org.trista.connector.net.ServerSocketFactory;
 import org.trista.exception.LifecycleException;
@@ -25,20 +25,7 @@ import java.security.cert.CertificateException;
 import java.util.Stack;
 import java.util.Vector;
 
-import java.io.IOException;
 import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.security.AccessControlException;
-import java.util.Stack;
-import java.util.Vector;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.UnrecoverableKeyException;
-import java.security.KeyManagementException;
-
-import static org.trista.Lifecycle.START_EVENT;
 
 
 /**
@@ -253,6 +240,12 @@ public final class HttpConnector
      * The lifecycle event support for this component.
      */
     protected LifecycleSupport lifecycle = new LifecycleSupport(this);
+
+
+    /**
+     * Is chunking allowed ?
+     */
+    private boolean allowChunking = true;
 
 
     // ------------------------------------------------------------- Properties
@@ -649,6 +642,15 @@ public final class HttpConnector
     public void setSecure(boolean secure) {
 
         this.secure = secure;
+
+    }
+
+    /**
+     * Get the allow chunking flag.
+     */
+    public boolean isChunkingAllowed() {
+
+        return (allowChunking);
 
     }
 
