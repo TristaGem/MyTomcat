@@ -11,7 +11,7 @@ import java.util.Locale;
 public class HttpResponseFacade implements HttpServletResponse {
   private HttpServletResponse response;
   public HttpResponseFacade(HttpResponse response) {
-    this.response = response;
+    this.response = (HttpServletResponse) response;
   }
 
   /** implementation of HttpServletResponse  */
