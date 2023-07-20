@@ -572,7 +572,18 @@ final class HttpProcessor
      * @param socket The socket on which we are connected to the client
      */
     private void process(Socket socket) {
+        /*
+        This version of process is not for Http1.1, I have will update Http1.1's version in next commit
+        HTTP1.1's version will also have instance boolean variable like keepAlive to indicate whether the connection is
+        persistant.
 
+        Explain: from p84
+        The process method does the following:
+        1. parse the connection
+        2. parse the request
+        3. parse headers
+         */
+        // ok is used to indicate there is no error during the process
         boolean ok = true;
         InputStream input = null;
         OutputStream output = null;
