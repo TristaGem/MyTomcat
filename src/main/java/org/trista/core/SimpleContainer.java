@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.trista.core.loader.SimpleLoader;
 import org.trista.logger.Logger;
 import org.trista.Request;
 import org.trista.Response;
@@ -21,8 +22,7 @@ import org.trista.container.Container;
 public class SimpleContainer implements Container {
 
   private Logger logger;
-  public static final String WEB_ROOT =
-    System.getProperty("user.dir") + File.separator  + "webroot";
+
 
   public SimpleContainer() {
   }
@@ -89,18 +89,7 @@ public class SimpleContainer implements Container {
   public void invoke(Request request, Response response) throws IOException, ServletException {
     String servletName = ( (HttpServletRequest) request).getRequestURI();
     servletName = servletName.substring(servletName.lastIndexOf("/") + 1);
-    URLClassLoader loader = null;
-    try {
-      URL[] urls = new URL[1];
-      URLStreamHandler streamHandler = null;
-      File classPath = new File(WEB_ROOT);
-      String repository = (new URL("file", null, classPath.getCanonicalPath() + File.separator)).toString() ;
-      urls[0] = new URL(null, repository, streamHandler);
-      loader = new URLClassLoader(urls);
-    }
-    catch (IOException e) {
-      System.out.println(e.toString() );
-    }
+    SimpleLoader loader = new SimpleLoader();
     Class myClass = null;
     try {
       myClass = loader.loadClass(servletName);
