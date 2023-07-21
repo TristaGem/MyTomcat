@@ -159,7 +159,7 @@ public class SimpleWrapper implements Wrapper, Pipeline {
     public Servlet loadServlet() throws ServletException {
         Class clazz = null;
         try {
-            loader.loadClass(servletClass);
+            clazz = loader.loadClass(servletClass);
         } catch(ClassNotFoundException e) {
             throw new ServletException(e);
         }
