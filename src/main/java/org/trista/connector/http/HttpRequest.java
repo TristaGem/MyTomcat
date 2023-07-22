@@ -67,4 +67,6 @@ public interface HttpRequest extends HttpServletRequest {
     void setProtocol(String protocol);
 
     void setRequestURI(String normalizedUri);
+
+    String getDecodedRequestURI();
 }

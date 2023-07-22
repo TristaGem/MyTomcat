@@ -2,7 +2,6 @@ package org.trista;
 
 import org.trista.core.loader.Loader;
 import org.trista.connector.http.HttpConnector;
-import org.trista.core.SimpleContainer;
 import org.trista.core.loader.SimpleLoader;
 import org.trista.core.wrapper.SimpleWrapper;
 import org.trista.core.wrapper.Wrapper;

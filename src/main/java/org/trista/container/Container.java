@@ -1,5 +1,6 @@
 package org.trista.container;
 
+import org.trista.core.loader.Loader;
 import org.trista.logger.Logger;
 import org.trista.Request;
 import org.trista.Response;
@@ -71,7 +72,7 @@ public interface Container {
      * no associated Loader, return the Loader associated with our parent
      * Container (if any); otherwise, return <code>null</code>.
      */
-//    public Loader getLoader();
+    public Loader getLoader();
 
 
     /**
@@ -79,7 +80,7 @@ public interface Container {
      *
      * @param loader The newly associated loader
      */
-//    public void setLoader(Loader loader);
+    public void setLoader(Loader loader);
 
 
     /**

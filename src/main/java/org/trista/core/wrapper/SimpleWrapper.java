@@ -8,7 +8,6 @@ import org.trista.logger.Logger;
 import org.trista.pipeline.Pipeline;
 import org.trista.pipeline.SimplePipeline;
 import org.trista.pipeline.Valve;
-import org.trista.util.StringManager;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -52,7 +51,7 @@ public class SimpleWrapper implements Wrapper, Pipeline {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
@@ -133,7 +132,7 @@ public class SimpleWrapper implements Wrapper, Pipeline {
     @Override
     public Servlet allocate() throws ServletException {
         // Load and initialize our instance if necessary
-        if (servlet ==null) {
+        if (servlet == null) {
             try {
                 servlet = loadServlet();
             }
@@ -186,8 +185,9 @@ public class SimpleWrapper implements Wrapper, Pipeline {
     }
 
     @Override
-    public void setServletClass(String modernServlet) {
-        this.servletClass = modernServlet;
+    public void setServletClass(String servletClass) {
+        this.servletClass = servletClass;
+        this.name = servletClass;
     }
 
     @Override
