@@ -43,6 +43,12 @@ public class SimpleContext implements Context, Lifecycle, Pipeline {
 
     private LifecycleSupport lifecycle = new LifecycleSupport(this);
 
+    private Container parent;
+
+    private boolean started;
+
+    private boolean stopped;
+
 
 
     public SimpleContext() {
@@ -112,7 +118,7 @@ public class SimpleContext implements Context, Lifecycle, Pipeline {
 
     @Override
     public Container getParent() {
-        return null;
+        return parent;
     }
 
     @Override
@@ -241,11 +247,77 @@ public class SimpleContext implements Context, Lifecycle, Pipeline {
 
     @Override
     public void start() throws LifecycleException {
-        lifecycle.fireLifecycleEvent(START_EVENT, null);
+        if (started) {
+            throw new LifecycleException("Simple Context already started");
+
+        }
+        // notify our interested LifecycleListeners
+        lifecycle.fireLifecycleEvent(BEFORE_START_EVENT, null);
+        started = true;
+
+        try {
+            // Start our subordinate components, if necessary
+            if((loader != null) && (loader instanceof Lifecycle))
+                ((Lifecycle) loader).start();
+
+            // Start our child containers
+            Container children[] = findChildren();
+            for(int i = 0; i < children.length; i++) {
+                if(children[i] instanceof  Lifecycle) {
+                    ((Lifecycle) children[i]).start();
+                }
+            }
+
+            // start the valves in our pipeline(including the basic)
+            if (pipeline instanceof Lifecycle) {
+                ((Lifecycle) pipeline).start();
+            }
+            lifecycle.fireLifecycleEvent(START_EVENT, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //notify our interested lifecycle listeners about the after start event
+        lifecycle.fireLifecycleEvent(AFTER_START_EVENT, null);
+
     }
 
     @Override
     public void stop() throws LifecycleException {
+        if (!started) {
+            throw new LifecycleException("Simple Context not started yet");
+
+        }
+        // notify our interested LifecycleListeners
+        lifecycle.fireLifecycleEvent(BEFORE_STOP_EVENT, null);
         lifecycle.fireLifecycleEvent(STOP_EVENT, null);
+        started = false;
+
+        try {
+            // stop the valves in our pipeline(including the basic)
+            if (pipeline instanceof Lifecycle) {
+                ((Lifecycle) pipeline).stop();
+            }
+
+            // stop our child containers
+            Container children[] = findChildren();
+            for(int i = 0; i < children.length; i++) {
+                if(children[i] instanceof  Lifecycle) {
+                    ((Lifecycle) children[i]).stop();
+                }
+            }
+
+            // stop our subordinate components, if necessary
+            if((loader != null) && (loader instanceof Lifecycle))
+                ((Lifecycle) loader).stop();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //notify our interested lifecycle listeners about the after start event
+        lifecycle.fireLifecycleEvent(AFTER_START_EVENT, null);
+
     }
 }
