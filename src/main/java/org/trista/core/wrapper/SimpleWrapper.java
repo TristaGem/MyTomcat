@@ -71,11 +71,11 @@ public class SimpleWrapper implements Wrapper, Pipeline {
 
     @Override
     public ClassLoader getParentClassLoader() {
-        return null;
+        return (ClassLoader) parent.getLoader();
     }
 
     @Override
-    public void setParentClassLoader(ClassLoader parent) {
+    public void setParentClassLoader(ClassLoader parentClassLoader) {
         this.loader = loader;
     }
 
